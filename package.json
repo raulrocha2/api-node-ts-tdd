@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test:staged": "jest"
-
+    "test:staged": "jest",
+    "prepare": "husky install"
   }
 }
