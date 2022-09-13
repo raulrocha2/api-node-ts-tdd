@@ -16,11 +16,12 @@ export class SignUpController implements IController {
           return badRequest(new MissingParamError(field))
         }
       }
-      const isValid = this.emailValidator.isValid(httpRequest.body.email)
+      const { email, password, passwordConfimation } = httpRequest.body
+      const isValid = this.emailValidator.isValid(email)
       if (!isValid) {
-        return badRequest(new InvalidParamError(httpRequest.body.email))
+        return badRequest(new InvalidParamError(email))
       }
-      if (httpRequest.body.password !== httpRequest.body.passwordConfimation) {
+      if (password !== passwordConfimation) {
         return badRequest(new InvalidParamError('passwordConfimation'))
       }
     } catch (error) {
