@@ -20,6 +20,9 @@ export class SignUpController implements IController {
       if (!isValid) {
         return badRequest(new InvalidParamError(httpRequest.body.email))
       }
+      if (httpRequest.body.password !== httpRequest.body.passwordConfimation) {
+        return badRequest(new InvalidParamError('passwordConfimation'))
+      }
     } catch (error) {
       return serverError()
     }
