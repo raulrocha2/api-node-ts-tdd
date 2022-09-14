@@ -1,8 +1,12 @@
 
-import { IAccountModel } from '../../domain/models/i-account'
-import { IAddAccount, IAddAccountModel } from '../../domain/usecases/i-add-account'
-import { InvalidParamError, MissingParamError, ServerError } from '../errors'
-import { IController, IEmailValidator } from '../protocols'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import {
+  IController,
+  IEmailValidator,
+  IAccountModel,
+  IAddAccount,
+  IAddAccountModel
+} from './signup-protocols'
 import { SignUpController } from './signup'
 
 interface ISutTypes {
@@ -179,7 +183,8 @@ describe('SignUp Controller', () => {
         passwordConfimation: 'any_password'
       }
     }
-    await sut.handle(httpRequest)
+    const httpReponse = await sut.handle(httpRequest)
+    expect(httpReponse.statusCode).toBe(201)
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
       email: 'any_email@mail.com',
