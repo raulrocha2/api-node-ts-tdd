@@ -183,8 +183,7 @@ describe('SignUp Controller', () => {
         passwordConfimation: 'any_password'
       }
     }
-    const httpReponse = await sut.handle(httpRequest)
-    expect(httpReponse.statusCode).toBe(201)
+    await sut.handle(httpRequest)
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
       email: 'any_email@mail.com',
@@ -208,5 +207,25 @@ describe('SignUp Controller', () => {
     const httpReponse = await sut.handle(httpRequest)
     expect(httpReponse.statusCode).toBe(500)
     expect(httpReponse.body).toEqual(new ServerError())
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        email: 'valid_email@mail.com',
+        password: 'valid_password',
+        passwordConfimation: 'valid_password'
+      }
+    }
+    const httpReponse = await sut.handle(httpRequest)
+    expect(httpReponse.statusCode).toBe(200)
+    expect(httpReponse.body).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
+      password: 'valid_password'
+    })
   })
 })

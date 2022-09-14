@@ -12,6 +12,6 @@ export const serverError = (): IHttpResponse => ({
 })
 
 export const ok = (data: any): IHttpResponse => ({
-  statusCode: 201,
+  statusCode: 200,
   body: data
 })
