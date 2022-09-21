@@ -5,6 +5,7 @@
   "author": "raulrocha2 <raul.rocha2@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "^29.0.0",
     "@types/node": "^18.7.14",
     "@types/validator": "^13.7.6",
@@ -31,6 +32,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "validator": "^13.7.0"
   }
 }
