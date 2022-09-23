@@ -5,8 +5,10 @@
   "author": "raulrocha2 <raul.rocha2@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.0",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^29.0.0",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^18.7.14",
     "@types/validator": "^13.7.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -33,6 +35,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "mongodb": "^4.10.0",
     "validator": "^13.7.0"
   }
 }
