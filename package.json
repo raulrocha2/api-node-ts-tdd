@@ -33,7 +33,7 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "MONGO_URL=mongodb://localhost:27017/clean-node-api sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
