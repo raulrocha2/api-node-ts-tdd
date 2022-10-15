@@ -15,8 +15,6 @@ export const MongoHelper = {
   },
 
   async getCollection (name: string): Promise<Collection> {
-    console.log(this.client)
-
     if (!this.client || this.client.hasBeenClosed) {
       await this.connect(this.uri)
     }
