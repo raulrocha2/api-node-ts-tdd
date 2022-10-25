@@ -1,8 +1,7 @@
-import { IAuthentication } from '../../../domain/usecases/i-authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
-import { IEmailValidator } from '../../protocols'
 import { LoginController } from './login'
+import { IEmailValidator, IAuthentication } from './login-protocols'
 
 const makeEmailValidation = (): IEmailValidator => {
   class ValidationStub implements IEmailValidator {
