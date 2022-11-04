@@ -1,5 +1,5 @@
 import { InvalidParamError } from '../../errors'
-import { IValidation } from './i-validation'
+import { IValidation } from '../../protocols/i-validation'
 import { ValidationComposite } from './validation-composite'
 
 const makeValidationStub = (): IValidation => {
