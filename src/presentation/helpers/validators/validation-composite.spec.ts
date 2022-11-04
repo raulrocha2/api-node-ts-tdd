@@ -40,4 +40,11 @@ describe('ValidationComposite', () => {
     const error = sut.validate({ field: 'any_value' })
     expect(error).toEqual(new Error())
   })
+
+  test('Should not return error if validations succeeds ', () => {
+    const { sut, validationStubs } = makeSut()
+    jest.spyOn(validationStubs[0], 'validate')
+    const error = sut.validate({ field: 'any_value' })
+    expect(error).toBeFalsy()
+  })
 })
