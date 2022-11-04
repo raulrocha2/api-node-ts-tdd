@@ -9,7 +9,7 @@ import {
 } from './signup-protocols'
 import { SignUpController } from './signup'
 import { IHttpRequest } from '../../protocols/i-http'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 interface ISutTypes {
   sut: IController

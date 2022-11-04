@@ -1,6 +1,6 @@
 
 import { IAddAccount } from '../../../domain/usecases/i-add-account'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { IController, IValidation } from './signup-protocols'
 import { IHttpRequest, IHttpResponse } from '../../protocols/i-http'
 
