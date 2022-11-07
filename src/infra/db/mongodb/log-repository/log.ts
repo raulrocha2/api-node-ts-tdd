@@ -1,4 +1,4 @@
-import { ILogErrorRepository } from '../../../../data/protocols/i-log-error-repository'
+import { ILogErrorRepository } from '../../../../data/protocols/db/i-log-error-repository'
 import { MongoHelper } from '../account-repository/helpers/mongo-helper'
 
 export class LogMongoRepository implements ILogErrorRepository {
