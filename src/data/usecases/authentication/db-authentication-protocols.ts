@@ -1,0 +1,6 @@
+export * from '../../protocols/db/i-update-access-token-repository'
+export * from '../add-account/db-add-account-protocols'
+export * from '../../../domain/usecases/i-authentication'
+export * from '../../protocols/criptography/i-hash-comparer'
+export * from '../../protocols/criptography/i-token-generator'
+export * from '../../protocols/db/i-load-account-by-email-repository'
