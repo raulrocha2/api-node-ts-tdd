@@ -13,12 +13,13 @@ export class DbAutthentication implements IAuthentication {
   async auth ({ email, password }: IAuthenticationModel): Promise<string> {
     const account = await this.loadAccountByEmailRepository.load(email)
     if (account) {
-      const validPassword = await this.hashComparer.compare(
+      const isValidPassword = await this.hashComparer.compare(
         password,
         account.password
       )
-      if (validPassword) {
-        await this.tokenGenerator.generate(account.id)
+      if (isValidPassword) {
+        const accessToken = await this.tokenGenerator.generate(account.id)
+        return accessToken
       }
     }
     return null
