@@ -1,5 +1,6 @@
 import { IAuthenticationModel } from '../../../domain/usecases/i-authentication'
 import { IHashComparer } from '../../protocols/criptography/i-hash-comparer'
+import { ITokenGenerator } from '../../protocols/criptography/i-token-generator'
 import { ILoadAccountByEmailRepository } from '../../protocols/db/i-load-account-by-email-repository'
 import { IAccountModel } from '../add-account/db-add-account-protocols'
 import { DbAutthentication } from './db-authentication'
@@ -33,19 +34,31 @@ const makeHashComparer = (): IHashComparer => {
   return new HashComparerStub()
 }
 
+const makeTokenGenerator = (): ITokenGenerator => {
+  class TokenGeneratorStub implements ITokenGenerator {
+    async generate (value: string): Promise<string> {
+      return await new Promise(resolve => resolve('any_token'))
+    }
+  }
+  return new TokenGeneratorStub()
+}
+
 interface ISutTypes {
   sut: DbAutthentication
   loadAccountByEmailRepositoryStub: ILoadAccountByEmailRepository
   hashComparerStub: IHashComparer
+  tokenGeneratorStub: ITokenGenerator
 }
 const makeSut = (): ISutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
   const hashComparerStub = makeHashComparer()
-  const sut = new DbAutthentication(loadAccountByEmailRepositoryStub, hashComparerStub)
+  const tokenGeneratorStub = makeTokenGenerator()
+  const sut = new DbAutthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub)
   return {
     sut,
     loadAccountByEmailRepositoryStub,
-    hashComparerStub
+    hashComparerStub,
+    tokenGeneratorStub
   }
 }
 
@@ -96,5 +109,12 @@ describe('DbAuthentication UseCase', () => {
     )
     const accessToken = await sut.auth(fakeAuthentication())
     expect(accessToken).toBeNull()
+  })
+
+  test('Should call TokenGenerator with correct id', async () => {
+    const { sut, tokenGeneratorStub } = makeSut()
+    const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate')
+    await sut.auth(fakeAuthentication())
+    expect(generateSpy).toHaveBeenCalledWith('any_id')
   })
 })
