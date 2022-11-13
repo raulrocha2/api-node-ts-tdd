@@ -2,7 +2,7 @@ import {
   IAuthentication,
   IAuthenticationModel,
   IHashComparer,
-  ITokenGenerator,
+  IEncrypter,
   ILoadAccountByEmailRepository,
   IUpdateAccessTokenRepository
 } from './db-authentication-protocols'
@@ -11,7 +11,7 @@ export class DbAutthentication implements IAuthentication {
   constructor (
     private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository,
     private readonly hashComparer: IHashComparer,
-    private readonly tokenGenerator: ITokenGenerator,
+    private readonly tokenGenerator: IEncrypter,
     private readonly updateAccessTokenRepository: IUpdateAccessTokenRepository
   ) { }
 
@@ -23,7 +23,7 @@ export class DbAutthentication implements IAuthentication {
         account.password
       )
       if (isValidPassword) {
-        const accessToken = await this.tokenGenerator.generate(account.id)
+        const accessToken = await this.tokenGenerator.encrypt(account.id)
         await this.updateAccessTokenRepository.updateAccessToken(account.id, accessToken)
         return accessToken
       }
