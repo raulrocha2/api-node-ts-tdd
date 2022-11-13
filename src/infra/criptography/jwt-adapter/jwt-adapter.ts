@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { IEncrypter } from '../../../../data/protocols/criptography/i-encrypter'
+import { IEncrypter } from '../../../data/protocols/criptography/i-encrypter'
 
 export class JwtAdapter implements IEncrypter {
   constructor (
@@ -7,7 +7,6 @@ export class JwtAdapter implements IEncrypter {
   ) { }
 
   async encrypt (value: string): Promise<string> {
-    jwt.sign({ id: value }, this.secretValue)
-    return null
+    return jwt.sign({ id: value }, this.secretValue)
   }
 }
