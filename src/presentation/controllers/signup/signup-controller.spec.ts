@@ -6,8 +6,8 @@ import {
   IAddAccount,
   IAddAccountModel,
   IValidation
-} from './signup-protocols'
-import { SignUpController } from './signup'
+} from './signup-controller-protocols'
+import { SignUpController } from './signup-controller'
 import { IHttpRequest } from '../../protocols/i-http'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 

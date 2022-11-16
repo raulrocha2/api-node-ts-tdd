@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb'
-import { ILoadAccountByEmailRepository } from '../../../../data/protocols/db/i-load-account-by-email-repository'
-import { IUpdateAccessTokenRepository } from '../../../../data/protocols/db/i-update-access-token-repository'
+import { ILoadAccountByEmailRepository } from '../../../../data/protocols/db/account/i-load-account-by-email-repository'
+import { IUpdateAccessTokenRepository } from '../../../../data/protocols/db/account/i-update-access-token-repository'
 import { IAccountModel } from '../../../../domain/models/i-account'
 import { IAddAccount, IAddAccountModel } from '../../../../domain/usecases/i-add-account'
-import { MongoHelper } from './helpers/mongo-helper'
+import { MongoHelper } from '../helpers/mongo-helper'
 
 export class AccountMongoRepository implements IAddAccount, ILoadAccountByEmailRepository, IUpdateAccessTokenRepository {
   async add (accountData: IAddAccountModel): Promise<IAccountModel> {
