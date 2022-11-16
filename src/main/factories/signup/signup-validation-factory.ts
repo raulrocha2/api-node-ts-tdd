@@ -5,7 +5,7 @@ import {
   ValidationComposite
 } from '../../../presentation/helpers/validators'
 import { IValidation } from '../../../presentation/protocols'
-import { EmailValidatorAdapter } from '../../../utils/email-alidator-adapter'
+import { EmailValidatorAdapter } from '../../adapters/validators/email-alidator-adapter'
 
 export const makeSignupValidation = (): ValidationComposite => {
   const validations: IValidation[] = []
