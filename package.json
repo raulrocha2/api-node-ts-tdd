@@ -33,7 +33,9 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "start": "MONGO_URL=mongodb://localhost:27017/clean-node-api sucrase-node src/main/server.ts",
+    "build": "rimraf dist && tsc",
+    "start": "MONGO_URL=mongodb://localhost:27017/clean-node-api node dist/main/server.js",
+    "dev": "MONGO_URL=mongodb://localhost:27017/clean-node-api sucrase-node src/main/server.ts",
     "test": "MONGO_URL=mongodb://localhost:27017/clean-node-api-test jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
@@ -45,7 +47,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",
-    "fast-glob": "^3.2.12",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
     "nodemon": "^2.0.19",
