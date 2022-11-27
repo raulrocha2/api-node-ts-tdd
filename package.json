@@ -31,11 +31,12 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
+    "start": "node dist/main/server.js",
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
     "build": "rimraf dist && tsc",
     "up": "npm run build && docker-compose up -d",
     "stop": "docker-compose down",
-    "start": "node dist/main/server.js",
-    "dev": "MONGO_URL=mongodb://localhost:27017/clean-node-api sucrase-node src/main/server.ts",
+    "dev": "MONGO_URL=mongodb://localhost:27017/clean-node-api nodemon src/main/server.ts",
     "test": "MONGO_URL=mongodb://localhost:27017/clean-node-api-test jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
@@ -46,8 +47,8 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "express": "^4.18.1",
     "husky": "7.0.2",
+    "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
     "nodemon": "^2.0.19",
