@@ -5,7 +5,9 @@ import {
   IAccountModel,
   IAddAccount,
   IAddAccountModel,
-  IValidation
+  IValidation,
+  IAuthentication,
+  IAuthenticationModel
 } from './signup-controller-protocols'
 import { SignUpController } from './signup-controller'
 import { IHttpRequest } from '../../protocols/i-http'
@@ -15,6 +17,7 @@ interface ISutTypes {
   sut: IController
   addAccountStub: IAddAccount
   validationStub: IValidation
+  authenticationStub: IAuthentication
 }
 
 const makeFakeAccount = (): IAccountModel => ({
@@ -51,14 +54,29 @@ const makeAddAccount = (): IAddAccount => {
   return new AddAccountStub()
 }
 
+const makeAuthentication = (): IAuthentication => {
+  class AuthenticationStub implements IAuthentication {
+    async auth (authentication: IAuthenticationModel): Promise<string> {
+      return 'any_token'
+    }
+  }
+  return new AuthenticationStub()
+}
+
 const makeSut = (): ISutTypes => {
   const addAccountStub = makeAddAccount()
   const validationStub = makeValidation()
-  const sut = new SignUpController(addAccountStub, validationStub)
+  const authenticationStub = makeAuthentication()
+  const sut = new SignUpController(
+    addAccountStub,
+    validationStub,
+    authenticationStub
+  )
   return {
     addAccountStub,
     sut,
-    validationStub
+    validationStub,
+    authenticationStub
   }
 }
 
@@ -106,5 +124,21 @@ describe('SignUp Controller', () => {
     )
     const httpReponse = await sut.handle(makeFakeHttpRequest())
     expect(httpReponse).toEqual(badRequest(new MissingParamError('any_error')))
+  })
+
+  test('Should calls Authentication with correct values', async () => {
+    const { sut, authenticationStub } = makeSut()
+    const authSpy = jest.spyOn(authenticationStub, 'auth')
+    const httpRequest = {
+      body: {
+        email: 'valid_email@mail.com',
+        password: 'valid_password'
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(authSpy).toHaveBeenCalledWith({
+      email: httpRequest.body.email,
+      password: httpRequest.body.password
+    })
   })
 })
