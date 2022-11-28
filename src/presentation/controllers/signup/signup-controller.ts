@@ -1,8 +1,9 @@
 
 import { IAddAccount } from '../../../domain/usecases/i-add-account'
-import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { badRequest, forbidden, ok, serverError } from '../../helpers/http/http-helper'
 import { IController, IValidation, IAuthentication } from './signup-controller-protocols'
 import { IHttpRequest, IHttpResponse } from '../../protocols/i-http'
+import { EmailExistsError } from '../../errors'
 
 export class SignUpController implements IController {
   constructor (
@@ -18,11 +19,14 @@ export class SignUpController implements IController {
         return badRequest(error)
       }
       const { name, email, password } = httpRequest.body
-      await this.addAccount.add({
+      const account = await this.addAccount.add({
         name,
         email,
         password
       })
+      if (!account) {
+        return forbidden(new EmailExistsError())
+      }
       const accessToken = await this.authentication.auth({
         email,
         password
