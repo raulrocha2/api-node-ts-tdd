@@ -1,5 +1,5 @@
 
-import { EmailExistsError, MissingParamError, ServerError } from '../../errors'
+import { EmailExistsError, MissingParamError, ServerError } from '../../../errors'
 import {
   IController,
   IAccountModel,
@@ -10,13 +10,13 @@ import {
   IAuthenticationModel
 } from './signup-controller-protocols'
 import { SignUpController } from './signup-controller'
-import { IHttpRequest } from '../../protocols/i-http'
+import { IHttpRequest } from '../../../protocols/i-http'
 import {
   badRequest,
   ok,
   serverError,
   forbidden
-} from '../../helpers/http/http-helper'
+} from '../../../helpers/http/http-helper'
 
 interface ISutTypes {
   sut: IController

@@ -1,9 +1,9 @@
 
-import { IAddAccount } from '../../../domain/usecases/i-add-account'
-import { badRequest, forbidden, ok, serverError } from '../../helpers/http/http-helper'
+import { IAddAccount } from '../../../../domain/usecases/i-add-account'
+import { badRequest, forbidden, ok, serverError } from '../../../helpers/http/http-helper'
 import { IController, IValidation, IAuthentication } from './signup-controller-protocols'
-import { IHttpRequest, IHttpResponse } from '../../protocols/i-http'
-import { EmailExistsError } from '../../errors'
+import { IHttpRequest, IHttpResponse } from '../../../protocols/i-http'
+import { EmailExistsError } from '../../../errors'
 
 export class SignUpController implements IController {
   constructor (
