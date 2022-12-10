@@ -16,7 +16,7 @@ describe('Survey Mongo Repository', () => {
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
-  test('Should add survey on success', async () => {
+  test('Should add a survey on success', async () => {
     const sut = new SurveyMongoRepository()
     await sut.add({
       question: 'any_question',
