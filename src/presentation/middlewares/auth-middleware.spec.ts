@@ -31,6 +31,7 @@ const makeLoadAccountByToken = (): ILoadAccountByToken => {
   }
   return new LoadAccountByTokenStub()
 }
+
 interface ISutTypes {
   loadAccountByTokenStub: ILoadAccountByToken
   sut: AuthMiddleware
