@@ -3,6 +3,7 @@ import { forbidden } from '../helpers/http/http-helper'
 import { AuthMiddleware } from './auth-middleware'
 import { ILoadAccountByToken } from '../../domain/usecases/i-load-account-by-token'
 import { IAccountModel } from '../../domain/models/i-account'
+import { IHttpRequest } from '../protocols'
 
 const makeFakeAccount = (): IAccountModel => ({
   id: 'valid_id',
@@ -12,19 +13,27 @@ const makeFakeAccount = (): IAccountModel => ({
   accessToken: 'valid_token'
 })
 
-class LoadAccountByTokenStub implements ILoadAccountByToken {
-  async load (accessToken: string, role?: string | undefined): Promise<IAccountModel> {
-    return await new Promise(resolve => resolve(makeFakeAccount()))
+const makeFakeRequest = (): IHttpRequest => ({
+  headers: {
+    'x-access-token': 'any_token'
   }
-}
+})
 
+const makeLoadAccountByToken = (): ILoadAccountByToken => {
+  class LoadAccountByTokenStub implements ILoadAccountByToken {
+    async load (accessToken: string, role?: string | undefined): Promise<IAccountModel> {
+      return await new Promise(resolve => resolve(makeFakeAccount()))
+    }
+  }
+  return new LoadAccountByTokenStub()
+}
 interface ISutTypes {
   loadAccountByTokenStub: ILoadAccountByToken
   sut: AuthMiddleware
 }
 
 const makeSut = (): ISutTypes => {
-  const loadAccountByTokenStub = new LoadAccountByTokenStub()
+  const loadAccountByTokenStub = makeLoadAccountByToken()
   const sut = new AuthMiddleware(loadAccountByTokenStub)
   return {
     sut,
@@ -42,11 +51,7 @@ describe('Auth Middleware', () => {
   test('Should call LoadAccountByToken with correct accessToken', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
     const loadSpy = jest.spyOn(loadAccountByTokenStub, 'load')
-    await sut.handle({
-      headers: {
-        'x-access-token': 'any_token'
-      }
-    })
+    await sut.handle(makeFakeRequest())
     expect(loadSpy).toHaveBeenCalledWith('any_token')
   })
 })
