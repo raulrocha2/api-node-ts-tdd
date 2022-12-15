@@ -37,7 +37,7 @@ const makeFakeHttpRequest = (): IHttpRequest => ({
     name: 'valid_name',
     email: 'valid_email@mail.com',
     password: 'valid_password',
-    passwordConfimation: 'valid_password'
+    passwordConfirmation: 'valid_password'
   }
 })
 
@@ -148,7 +148,7 @@ describe('SignUp Controller', () => {
         name: 'valid_name',
         email: 'valid_email@mail.com',
         password: 'valid_password',
-        passwordConfimation: 'valid_password'
+        passwordConfirmation: 'valid_password'
       }
     }
     await sut.handle(httpRequest)
