@@ -86,6 +86,7 @@ describe('Account Mongo Repository', () => {
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
       expect(account.email).toBe('any_email@mail.com')
+      expect(account.accessToken).toBe('any_token')
     })
 
     test('Should return an account on loadByToken with role success', async () => {
