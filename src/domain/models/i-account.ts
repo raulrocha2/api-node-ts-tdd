@@ -4,4 +4,5 @@ export interface IAccountModel {
   email: string
   password: string
   accessToken?: string
+  role?: string
 }

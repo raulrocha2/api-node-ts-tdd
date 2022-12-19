@@ -36,6 +36,7 @@ export class AccountMongoRepository implements IAddAccount, ILoadAccountByEmailR
       accessToken,
       role
     })
+
     if (account) return MongoHelper.map(account)
   }
 }

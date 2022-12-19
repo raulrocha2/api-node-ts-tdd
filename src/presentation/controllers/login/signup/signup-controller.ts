@@ -18,11 +18,12 @@ export class SignUpController implements IController {
       if (error) {
         return badRequest(error)
       }
-      const { name, email, password } = httpRequest.body
+      const { name, email, password, role } = httpRequest.body
       const account = await this.addAccount.add({
         name,
         email,
-        password
+        password,
+        role
       })
       if (!account) {
         return forbidden(new EmailExistsError())
