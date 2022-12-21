@@ -1,11 +1,17 @@
 version: 2.1
 
-jobs:
-  build_and_test:
-    executor: node/default
-    steps:
-      - checkout
-        pkg-manager: yarn
+orbs:
+  node: circleci/node@4.7
+
+workflows:
+  jobs:
+    build_and_test: # this can be any name you choose
+      executor: node/default # use the default executor defined within the orb
+      steps:
+        - checkout
+        - run:
+            command: yarn
+            name: Run yarn
         - run:
             command: npx eslint 'src/**' 
             name: Run Eslint
