@@ -1,20 +1,24 @@
 version: 2.1
-
-orbs:
-  node: circleci/node@4.7
-
-workflows:
   jobs:
-    build_and_test: # this can be any name you choose
-      executor: node/default # use the default executor defined within the orb
+    test:
       steps:
         - checkout
-        - run:
-            command: yarn
-            name: Run yarn
-        - run:
-            command: npx eslint 'src/**' 
-            name: Run Eslint
-        - run:
-            command: yarn test:coveralls
-            name: Run tests
+        - run: echo "Running tests"
+        - run: npm install
+        - run: npx eslint 'src/**' 
+        - run: npm run test:coveralls
+    build:
+      docker:
+        - image: circleci/node:12.16
+      steps:
+        - checkout
+        - run: echo "build project"
+        - npm install
+        - npm run build
+
+workflows:
+  version: 2.1
+    test_build:
+      jobs:
+        - test
+        
