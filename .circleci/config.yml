@@ -13,7 +13,7 @@ jobs:
       - run: npm run test:coveralls
 
 workflows:
-  version: 2.1
+  test_build:
     jobs:
       - test
         
