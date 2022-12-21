@@ -5,8 +5,7 @@ jobs:
     executor: node/default
     steps:
       - checkout
-        - node/install-packages:
-            pkg-manager: yarn
+        pkg-manager: yarn
         - run:
             command: npx eslint 'src/**' 
             name: Run Eslint
