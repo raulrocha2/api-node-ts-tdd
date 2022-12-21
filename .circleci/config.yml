@@ -10,5 +10,4 @@ workflows:
           pkg-manager: yarn
 
           run:
-            command: eslint 'src/**'
-            command: yarn test:coveralls
+            command: eslint 'src/**' && yarn test:coveralls
