@@ -1,14 +1,10 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@4.7
-
-workflows:
-  jobs:
-    build_and_test: # this can be any name you choose
-      executor: node/default # use the default executor defined within the orb
-      steps:
-        - checkout
+jobs:
+  build_and_test:
+    executor: node/default
+    steps:
+      - checkout
         - node/install-packages:
             pkg-manager: yarn
         - run:
