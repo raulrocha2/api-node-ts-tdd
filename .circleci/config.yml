@@ -9,5 +9,5 @@ workflows:
           version: '18.12'
           pkg-manager: yarn
 
-          run:
-            command: yarn test:coveralls
+      - run:
+          command: npm run test:coveralls
