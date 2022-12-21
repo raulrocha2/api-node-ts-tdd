@@ -1,0 +1,14 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+workflows:
+    jobs:
+      - node/test:
+          version: '18.12'
+          pkg-manager: yarn
+
+          run:
+            command: eslint 'src/**'
+            command: yarn test:coveralls
