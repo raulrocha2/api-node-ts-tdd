@@ -1,4 +1,4 @@
-import { ISurveyModel } from '../models/I-surveys'
+import { ISurveyModel } from '../models/i-surveys'
 
 export interface ILoadSurveys {
   load: () => Promise<ISurveyModel[]>

@@ -7,29 +7,29 @@ import { noContent, ok, serverError } from '../../../helpers/http/http-helper'
 
 const makeFakeSurveys = (): ISurveyModel[] => ([
   {
-    id: 'datatype.uuid()',
-    question: 'random.words()',
+    id: 'uuid_01',
+    question: 'question_01',
     answers: [{
-      image: 'image.random()',
-      answer: 'random.words()'
+      image: 'image_01',
+      answer: 'answer_01'
     }],
     date: new Date()
   },
   {
-    id: 'datatype.uuid()',
-    question: 'random.words()',
+    id: 'uuid_02',
+    question: 'question_02',
     answers: [{
-      image: 'image.random()',
-      answer: 'random.words()'
+      image: 'image_01',
+      answer: 'answer_01'
     }],
     date: new Date()
   },
   {
-    id: 'datatype.uuid()',
-    question: 'random.words()',
+    id: 'uuid_03',
+    question: 'question_03',
     answers: [{
-      image: 'image.random()',
-      answer: 'random.words()'
+      image: 'image_01',
+      answer: 'answer_01'
     }],
     date: new Date()
   }
