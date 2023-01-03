@@ -2,15 +2,15 @@ import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 
-let accountCollection: Collection
+let surveyCollection: Collection
 describe('Survey Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('surveys')
-    await accountCollection.deleteMany({})
+    surveyCollection = await MongoHelper.getCollection('surveys')
+    await surveyCollection.deleteMany({})
   })
 
   afterAll(async () => {
@@ -33,7 +33,7 @@ describe('Survey Mongo Repository', () => {
         ],
         date: new Date()
       })
-      const survey = await accountCollection.findOne({
+      const survey = await surveyCollection.findOne({
         question: 'any_question'
       })
       expect(survey).toBeTruthy()
@@ -44,7 +44,7 @@ describe('Survey Mongo Repository', () => {
   describe('loadAll()', () => {
     test('Should laod all surveys on success', async () => {
       const sut = new SurveyMongoRepository()
-      await accountCollection.insertMany([
+      await surveyCollection.insertMany([
         {
           question: 'any_question-1',
           answers: [
