@@ -79,7 +79,7 @@ describe('Survey Routes', () => {
         .expect(403)
     })
 
-    test('Should return 204 on load all surveys', async () => {
+    test('Should return 204 on load survey is empty', async () => {
       const res = await accountCollection.insertOne({
         name: 'any_name',
         email: 'any_email@mail.com',
@@ -96,7 +96,6 @@ describe('Survey Routes', () => {
           accessToken
         }
       })
-
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
