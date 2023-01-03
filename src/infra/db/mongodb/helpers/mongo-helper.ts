@@ -26,5 +26,16 @@ export const MongoHelper = {
     return Object.assign({}, objWithoutId, {
       id: _id.toString()
     })
+  },
+
+  mapObject (collections: any): any {
+    const newObject = []
+    for (const collection of collections) {
+      const { _id, ...objWithoutId } = collection
+      newObject.push(Object.assign({}, objWithoutId, {
+        id: _id.toString()
+      }))
+    }
+    return newObject
   }
 }
