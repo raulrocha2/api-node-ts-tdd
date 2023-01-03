@@ -22,6 +22,27 @@ describe('Survey Routes', () => {
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
+
+  const makeAccessToken = async (): Promise<string> => {
+    const res = await accountCollection.insertOne({
+      name: 'any_name',
+      email: 'any_email@mail.com',
+      password: 'any_password',
+      role: 'admin'
+    })
+    const account = await accountCollection.findOne(res.insertedId)
+    const id = account?._id.toString()
+    const accessToken = sign({ id }, env.jwtSecretKey)
+    await accountCollection.updateOne({
+      _id: new ObjectId(id)
+    }, {
+      $set: {
+        accessToken
+      }
+    })
+    return accessToken
+  }
+
   describe('POST /surveys', () => {
     test('Should return 403 on add survey without accessToken', async () => {
       await request(app)
@@ -39,23 +60,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password',
-        role: 'admin'
-      })
-      const account = await accountCollection.findOne(res.insertedId)
-      const id = account?._id.toString()
-      const accessToken = sign({ id }, env.jwtSecretKey)
-      await accountCollection.updateOne({
-        _id: new ObjectId(id)
-      }, {
-        $set: {
-          accessToken
-        }
-      })
-
+      const accessToken = await makeAccessToken()
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -80,26 +85,43 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on load survey is empty', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password',
-        role: 'admin'
-      })
-      const account = await accountCollection.findOne(res.insertedId)
-      const id = account?._id.toString()
-      const accessToken = sign({ id }, env.jwtSecretKey)
-      await accountCollection.updateOne({
-        _id: new ObjectId(id)
-      }, {
-        $set: {
-          accessToken
-        }
-      })
+      const accessToken = await makeAccessToken()
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
         .expect(204)
+    })
+
+    test('Should return 200 on load all surveys with valid access token', async () => {
+      const accessToken = await makeAccessToken()
+      await surveyCollection.insertMany([
+        {
+          question: 'any_question-1',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            }
+          ],
+          date: new Date()
+        },
+        {
+          question: 'any_question-2',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            }
+          ],
+          date: new Date()
+        }
+      ])
+
+      const response = await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+      expect(response.status).toEqual(200)
+      expect(response.body[0].question).toEqual('any_question-1')
     })
   })
 })
