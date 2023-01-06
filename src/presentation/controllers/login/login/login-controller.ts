@@ -1,4 +1,4 @@
-import { IAuthentication } from '../../../../domain/usecases/i-authentication'
+import { IAuthentication } from '@/domain/usecases/i-authentication'
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helper'
 import { IController, IHttpRequest, IHttpResponse, IValidation } from '../../../protocols'
 

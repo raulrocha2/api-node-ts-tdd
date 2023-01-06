@@ -1,4 +1,4 @@
-import { IValidation } from '../../../../../presentation/protocols/i-validation'
+import { IValidation } from '@/presentation/protocols/i-validation'
 import { makeAddSurveyValidation } from './add-survey-validation-factory'
 import { RequireFieldValidation, ValidationComposite } from '../../../../../validation/validators'
 
