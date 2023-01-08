@@ -1,6 +1,6 @@
 {
   "name": "clean-node-api-tdd",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "author": "raulrocha2 <raul.rocha2@gmail.com>",
   "license": "MIT",
