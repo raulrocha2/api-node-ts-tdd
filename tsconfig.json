@@ -13,6 +13,7 @@
         "@data/*": ["data/*"],
         "@presentation/*": ["presentation/*"],
         "@main/*": ["main/*"],
+        "@validation/*": ["validation/*"],
 
       },
       "sourceMap": false
