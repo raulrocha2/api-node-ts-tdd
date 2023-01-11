@@ -79,4 +79,51 @@ describe('Survey Mongo Repository', () => {
       expect(surveys.length).toBe(0)
     })
   })
+
+  describe('loadById()', () => {
+    test('Should load survey by id on success', async () => {
+      const res = await surveyCollection.insertOne({
+        question: 'any_question',
+        answers: [
+          {
+            image: 'any_image',
+            answer: 'any_answer'
+          },
+          {
+            answer: 'other_answer'
+          }
+        ],
+        date: new Date()
+      })
+      await surveyCollection.insertMany([
+        {
+          question: 'any_question-1',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            }
+          ],
+          date: new Date()
+        },
+        {
+          question: 'any_question-2',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            }
+          ],
+          date: new Date()
+        }
+      ])
+      const surveyInserted = await surveyCollection.findOne(res.insertedId)
+      const id = surveyInserted?._id.toString()
+      const sut = new SurveyMongoRepository()
+      const survey = await sut.loadById(id)
+      expect(survey).toBeTruthy()
+      expect(survey?.id).toBe(id)
+      expect(survey?.question).toBe('any_question')
+    })
+  })
 })
