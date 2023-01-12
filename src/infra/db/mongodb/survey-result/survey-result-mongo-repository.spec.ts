@@ -57,7 +57,7 @@ describe('Survey Result Mongo Repository', () => {
   })
 
   describe('save()', () => {
-    test('Should save a survey result on success', async () => {
+    test('Should save a new survey result on success', async () => {
       const surveyId = (await makeSurvey()).id
       const accountId = (await makeAccount()).id
       const sut = new SurveyResultMongoRepository()
@@ -70,6 +70,28 @@ describe('Survey Result Mongo Repository', () => {
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.answer).toBe('any_answer')
+    })
+
+    test('Should save update a survey result on success', async () => {
+      const surveyId = (await makeSurvey()).id
+      const accountId = (await makeAccount()).id
+      const sut = new SurveyResultMongoRepository()
+      await sut.save({
+        surveyId,
+        accountId,
+        answer: 'any_answer',
+        date: new Date()
+      })
+
+      const surveyResult = await sut.save({
+        surveyId,
+        accountId,
+        answer: 'any_answer_updated',
+        date: new Date()
+      })
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toBeTruthy()
+      expect(surveyResult.answer).toBe('any_answer_updated')
     })
   })
 })
