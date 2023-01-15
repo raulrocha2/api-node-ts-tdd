@@ -1,8 +1,7 @@
 import { SaveSurveyResultController } from './save-survey-result-controller.'
-import { forbidden, IHttpRequest, ILoadSurveyById } from './save-survey-result-protocols'
+import { forbidden, IHttpRequest, ILoadSurveyById, ServerError, InvalidParamError } from './save-survey-result-protocols'
 import MockDate from 'mockdate'
 import { ISurveyModel } from '../survey/load-surveys/load-surveys-protocols'
-import { InvalidParamError } from '@/presentation/errors'
 
 const makeFakeRequest = (): IHttpRequest => ({
   body: {
@@ -73,5 +72,15 @@ describe('SaveSurveyResult controller', () => {
     )
     const httpReponse = await sut.handle(makeFakeRequest())
     expect(httpReponse).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(async () => {
+      return await new Promise((_resolve, reject) => reject(new Error()))
+    }
+    )
+    const httpReponse = await sut.handle(makeFakeRequest())
+    expect(httpReponse.body).toEqual(new ServerError(httpReponse.body))
   })
 })
