@@ -1,5 +1,5 @@
 import { ISurveyResultModel } from '@/domain/models/i-survey-result'
-import { ISaveSurveyResult, ISaveSurveyResultModel } from '@/domain/usecases/i-save-survey-result'
+import { ISaveSurveyResult, ISaveSurveyResultModel } from '@/domain/usecases/survey-result/i-save-survey-result'
 import { MongoHelper } from '../helpers/mongo-helper'
 
 export class SurveyResultMongoRepository implements ISaveSurveyResult {

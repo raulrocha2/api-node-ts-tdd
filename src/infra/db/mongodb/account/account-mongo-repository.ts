@@ -1,10 +1,10 @@
 import { ObjectId } from 'mongodb'
 import { ILoadAccountByEmailRepository } from '@/data/protocols/db/account/i-load-account-by-email-repository'
 import { IUpdateAccessTokenRepository } from '@/data/protocols/db/account/i-update-access-token-repository'
-import { ILoadAccountByTokenRepository } from '@/data/usecases/load-account-by-token/db-load-account-by-token-protocols'
 import { IAccountModel } from '@domain/models/i-account'
-import { IAddAccount, IAddAccountModel } from '@domain/usecases/i-add-account'
+import { IAddAccount, IAddAccountModel } from '@/domain/usecases/account/i-add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { ILoadAccountByTokenRepository } from '@/data/protocols/db/account/i-load-account-by-token-repository'
 
 export class AccountMongoRepository implements IAddAccount, ILoadAccountByEmailRepository, IUpdateAccessTokenRepository, ILoadAccountByTokenRepository {
   async add (accountData: IAddAccountModel): Promise<IAccountModel> {
