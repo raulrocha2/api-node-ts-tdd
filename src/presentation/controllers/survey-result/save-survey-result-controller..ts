@@ -6,7 +6,8 @@ import {
   IHttpResponse,
   InvalidParamError,
   serverError,
-  ISaveSurveyResult
+  ISaveSurveyResult,
+  ok
 } from './save-survey-result-protocols'
 
 export class SaveSurveyResultController implements IController {
@@ -20,8 +21,7 @@ export class SaveSurveyResultController implements IController {
       const { surveyId } = httpRequest.params
       const {
         accountId,
-        answer,
-        date
+        answer
       } = httpRequest.body
 
       const survey = await this.loadSurveyById.loadById(surveyId)
@@ -34,13 +34,13 @@ export class SaveSurveyResultController implements IController {
         return forbidden(new InvalidParamError('surveyId'))
       }
 
-      await this.saveSurveyResult.save({
+      const surveyResult = await this.saveSurveyResult.save({
         surveyId,
         accountId,
         answer,
-        date
+        date: new Date()
       })
-      return null
+      return ok(surveyResult)
     } catch (error) {
       return serverError(error)
     }
