@@ -19,10 +19,7 @@ export class SaveSurveyResultController implements IController {
   async handle (httpRequest: IHttpRequest): Promise<IHttpResponse> {
     try {
       const { surveyId } = httpRequest.params
-      const {
-        accountId,
-        answer
-      } = httpRequest.body
+      const { answer } = httpRequest.body
 
       const survey = await this.loadSurveyById.loadById(surveyId)
       if (survey) {
@@ -36,7 +33,7 @@ export class SaveSurveyResultController implements IController {
 
       const surveyResult = await this.saveSurveyResult.save({
         surveyId,
-        accountId,
+        accountId: httpRequest.accountId,
         answer,
         date: new Date()
       })

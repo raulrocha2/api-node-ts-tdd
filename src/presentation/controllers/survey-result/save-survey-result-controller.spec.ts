@@ -5,12 +5,12 @@ import { ISurveyModel } from '../survey/load-surveys/load-surveys-protocols'
 
 const makeFakeRequest = (): IHttpRequest => ({
   body: {
-    accountId: 'any_account_id',
     answer: 'any_answer'
   },
   params: {
     surveyId: 'any_id'
-  }
+  },
+  accountId: 'any_account_id'
 })
 
 const makeFakeSurveyModel = (): ISurveyModel => ({
