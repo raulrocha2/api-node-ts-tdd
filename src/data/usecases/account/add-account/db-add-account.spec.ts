@@ -1,7 +1,7 @@
 import {
   IAddAccount,
   IHasher,
-  IAddAccountModel,
+  IAddAccountParams,
   IAccountModel,
   IAddAccountRepository,
   ILoadAccountByEmailRepository
@@ -15,7 +15,7 @@ const fakeAccount = (): IAccountModel => ({
   password: 'hashed_password'
 })
 
-const fakeAccoutData = (): IAddAccountModel => ({
+const fakeAccoutData = (): IAddAccountParams => ({
   name: 'valid_name',
   email: 'valid_email@mail.com',
   password: 'valid_password'
@@ -32,7 +32,7 @@ const makeLoadAccountByEmailRepository = (): ILoadAccountByEmailRepository => {
 
 const makeAddAccountRepository = (): IAddAccountRepository => {
   class AddAccountRepositoryStub implements IAddAccountRepository {
-    async add (accountData: IAddAccountModel): Promise<IAccountModel> {
+    async add (accountData: IAddAccountParams): Promise<IAccountModel> {
       return await new Promise(resolve => resolve(fakeAccount()))
     }
   }

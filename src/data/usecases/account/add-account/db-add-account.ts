@@ -1,7 +1,7 @@
 import {
   IAccountModel,
   IAddAccount,
-  IAddAccountModel,
+  IAddAccountParams,
   IHasher,
   IAddAccountRepository,
   ILoadAccountByEmailRepository
@@ -14,7 +14,7 @@ export class DbAddAccount implements IAddAccount {
     private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository
   ) { }
 
-  async add (accountData: IAddAccountModel): Promise<IAccountModel> {
+  async add (accountData: IAddAccountParams): Promise<IAccountModel> {
     const accountExist = await this.loadAccountByEmailRepository.loadByEmail(accountData.email)
     if (!accountExist) {
       const passwordHashed = await this.hasher.hash(accountData.password)

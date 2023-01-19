@@ -1,5 +1,5 @@
 import {
-  IAuthenticationModel,
+  IAuthenticationParams,
   IHashComparer,
   IEncrypter,
   ILoadAccountByEmailRepository,
@@ -15,7 +15,7 @@ const fakeAccount = (): IAccountModel => ({
   password: 'hash_password'
 })
 
-const fakeAuthentication = (): IAuthenticationModel => ({
+const fakeAuthentication = (): IAuthenticationParams => ({
   email: 'any_email@mail.com',
   password: 'any_password'
 })

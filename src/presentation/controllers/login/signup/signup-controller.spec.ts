@@ -4,10 +4,10 @@ import {
   IController,
   IAccountModel,
   IAddAccount,
-  IAddAccountModel,
+  IAddAccountParams,
   IValidation,
   IAuthentication,
-  IAuthenticationModel
+  IAuthenticationParams
 } from './signup-controller-protocols'
 import { SignUpController } from './signup-controller'
 import { IHttpRequest } from '../../../protocols/i-http'
@@ -52,7 +52,7 @@ const makeValidation = (): IValidation => {
 
 const makeAddAccount = (): IAddAccount => {
   class AddAccountStub implements IAddAccount {
-    async add (accountData: IAddAccountModel): Promise<IAccountModel> {
+    async add (accountData: IAddAccountParams): Promise<IAccountModel> {
       return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
@@ -61,7 +61,7 @@ const makeAddAccount = (): IAddAccount => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth (authentication: IAuthenticationModel): Promise<string> {
+    async auth (authentication: IAuthenticationParams): Promise<string> {
       return 'any_token'
     }
   }

@@ -1,7 +1,7 @@
 import { MissingParamError } from '../../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helper'
 import { LoginController } from './login-controller'
-import { IAuthentication, IHttpRequest, IAuthenticationModel, IValidation } from './login-controller-protocols'
+import { IAuthentication, IHttpRequest, IAuthenticationParams, IValidation } from './login-controller-protocols'
 
 const makeValidation = (): IValidation => {
   class ValidationStub implements IValidation {
@@ -14,7 +14,7 @@ const makeValidation = (): IValidation => {
 
 const makeAuthentication = (): IAuthentication => {
   class AuthenticationStub implements IAuthentication {
-    async auth (authentication: IAuthenticationModel): Promise<string> {
+    async auth (authentication: IAuthenticationParams): Promise<string> {
       return 'any_token'
     }
   }

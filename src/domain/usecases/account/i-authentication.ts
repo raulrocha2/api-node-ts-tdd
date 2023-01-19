@@ -1,9 +1,9 @@
 
-export interface IAuthenticationModel {
+export interface IAuthenticationParams {
   email: string
   password: string
 }
 
 export interface IAuthentication {
-  auth: (authentication: IAuthenticationModel) => Promise<string>
+  auth: (authentication: IAuthenticationParams) => Promise<string>
 }
