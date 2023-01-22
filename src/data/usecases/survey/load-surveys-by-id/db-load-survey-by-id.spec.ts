@@ -1,26 +1,8 @@
+import { mockLoadSurveyByIdRepositorySub } from '@/data/test/mock-db-survey'
+import { mockSurveyModel, throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 import { DbLoadSurveyById } from './db-load-survey-by-id'
-import { ISurveyModel, ILoadSurveyByIdRepository } from './db-load-survey-by-id-protocols'
-
-const makeFakeSurvey = (): ISurveyModel => ({
-  id: 'uuid_01',
-  question: 'question_01',
-  answers: [{
-    image: 'image_01',
-    answer: 'answer_01'
-  }],
-  date: new Date()
-})
-
-const makeLoadSurveyRepositorySub = (): ILoadSurveyByIdRepository => {
-  class LoadSurveyRepositorySub implements ILoadSurveyByIdRepository {
-    async loadById (id: string): Promise<ISurveyModel> {
-      return await new Promise(resolve => resolve(makeFakeSurvey()))
-    }
-  }
-
-  return new LoadSurveyRepositorySub()
-}
+import { ILoadSurveyByIdRepository } from './db-load-survey-by-id-protocols'
 
 interface ISutTypes {
   sut: DbLoadSurveyById
@@ -28,7 +10,7 @@ interface ISutTypes {
 }
 
 const makeSut = (): ISutTypes => {
-  const loadSurveyByIdRepository = makeLoadSurveyRepositorySub()
+  const loadSurveyByIdRepository = mockLoadSurveyByIdRepositorySub()
   const sut = new DbLoadSurveyById(loadSurveyByIdRepository)
   return {
     sut,
@@ -55,7 +37,7 @@ describe('DbLoadSurveyById Usecase', () => {
   test('Should return a survey on success', async () => {
     const { sut } = makeSut()
     const survey = await sut.loadById('valid_id')
-    expect(survey).toEqual(makeFakeSurvey())
+    expect(survey).toEqual(mockSurveyModel())
   })
 
   test('Should return null if LoadSurveyByIdRepository returns null', async () => {
@@ -69,9 +51,7 @@ describe('DbLoadSurveyById Usecase', () => {
 
   test('Should throw if LoadSurveyByIdRepository throws', async () => {
     const { loadSurveyByIdRepository, sut } = makeSut()
-    jest.spyOn(loadSurveyByIdRepository, 'loadById').mockReturnValueOnce(
-      new Promise((resolve, reject) => reject(new Error()))
-    )
+    jest.spyOn(loadSurveyByIdRepository, 'loadById').mockImplementationOnce(throwError)
     const promise = sut.loadById('invalid_id')
     await expect(promise).rejects.toThrow()
   })

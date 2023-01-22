@@ -1,16 +1,8 @@
 
 import { InvalidParamError } from '@/presentation/errors'
 import { IValidation } from '@/presentation/protocols'
+import { mockValidation } from '../test'
 import { ValidationComposite } from './validation-composite'
-
-const makeValidationStub = (): IValidation => {
-  class ValidationStubs implements IValidation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-  return new ValidationStubs()
-}
 
 interface ISutTypes {
   sut: ValidationComposite
@@ -18,7 +10,7 @@ interface ISutTypes {
 }
 
 const makeSut = (): ISutTypes => {
-  const validationStubs = [makeValidationStub(), makeValidationStub()]
+  const validationStubs = [mockValidation(), mockValidation()]
   const sut = new ValidationComposite(validationStubs)
   return {
     validationStubs,

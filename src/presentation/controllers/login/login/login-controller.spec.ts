@@ -1,25 +1,9 @@
+import { mockAuthentication } from '@/presentation/test'
+import { mockValidation } from '@/validation/test'
 import { MissingParamError } from '../../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helper'
 import { LoginController } from './login-controller'
-import { IAuthentication, IHttpRequest, IAuthenticationParams, IValidation } from './login-controller-protocols'
-
-const makeValidation = (): IValidation => {
-  class ValidationStub implements IValidation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-  return new ValidationStub()
-}
-
-const makeAuthentication = (): IAuthentication => {
-  class AuthenticationStub implements IAuthentication {
-    async auth (authentication: IAuthenticationParams): Promise<string> {
-      return 'any_token'
-    }
-  }
-  return new AuthenticationStub()
-}
+import { IAuthentication, IHttpRequest, IValidation } from './login-controller-protocols'
 
 interface ISutTypes {
   sut: LoginController
@@ -27,8 +11,8 @@ interface ISutTypes {
   authenticationStub: IAuthentication
 }
 const makeSut = (): ISutTypes => {
-  const validationStub = makeValidation()
-  const authenticationStub = makeAuthentication()
+  const validationStub = mockValidation()
+  const authenticationStub = mockAuthentication()
   const sut = new LoginController(authenticationStub, validationStub)
   return {
     sut,
@@ -37,7 +21,7 @@ const makeSut = (): ISutTypes => {
   }
 }
 
-const makeFakeRequest = (): IHttpRequest => (
+const mockRequest = (): IHttpRequest => (
   {
     body: {
       email: 'valid_email@mail.com',
@@ -65,7 +49,7 @@ describe('Login Controller', () => {
     jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
       new Promise(resolve => resolve(null))
     )
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(unauthorized())
   })
 
@@ -74,20 +58,20 @@ describe('Login Controller', () => {
     jest.spyOn(authenticationStub, 'auth').mockResolvedValueOnce(
       new Promise((resolve, reject) => reject(new Error()))
     )
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('Should return 200 if valid credentials are provided', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 
   test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpRequest = makeFakeRequest()
+    const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
@@ -97,7 +81,7 @@ describe('Login Controller', () => {
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(
       new MissingParamError('any_error')
     )
-    const httpReponse = await sut.handle(makeFakeRequest())
+    const httpReponse = await sut.handle(mockRequest())
     expect(httpReponse).toEqual(badRequest(new MissingParamError('any_error')))
   })
 })

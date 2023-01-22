@@ -1,4 +1,4 @@
-import { IAccountModel } from '../../domain/models/i-account'
+import { mockLoadAccountByToken } from '@/data/test'
 import { AuthMiddleware } from './auth-middleware'
 import {
   IHttpRequest,
@@ -9,28 +9,11 @@ import {
   serverError
 } from './auth-middleware-protocols'
 
-const makeFakeAccount = (): IAccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password',
-  accessToken: 'valid_token'
-})
-
 const makeFakeRequest = (): IHttpRequest => ({
   headers: {
     'x-access-token': 'any_token'
   }
 })
-
-const makeLoadAccountByToken = (): ILoadAccountByToken => {
-  class LoadAccountByTokenStub implements ILoadAccountByToken {
-    async load (accessToken: string, role?: string | undefined): Promise<IAccountModel> {
-      return await new Promise(resolve => resolve(makeFakeAccount()))
-    }
-  }
-  return new LoadAccountByTokenStub()
-}
 
 interface ISutTypes {
   loadAccountByTokenStub: ILoadAccountByToken
@@ -38,7 +21,7 @@ interface ISutTypes {
 }
 
 const makeSut = (role?: string): ISutTypes => {
-  const loadAccountByTokenStub = makeLoadAccountByToken()
+  const loadAccountByTokenStub = mockLoadAccountByToken()
   const sut = new AuthMiddleware(loadAccountByTokenStub, role)
   return {
     sut,
@@ -73,7 +56,7 @@ describe('Auth Middleware', () => {
   test('Should return 200 if LoadAccountByToken return an account', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(ok({ accountId: 'valid_id' }))
+    expect(httpResponse).toEqual(ok({ accountId: 'any_id' }))
   })
 
   test('Should return 500 if LoadAccountByToken throws', async () => {
