@@ -3,7 +3,7 @@
   "version": "2.2.0",
   "main": "index.js",
   "author": "raulrocha2 <raul.rocha2@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@faker-js/faker": "faker-js/faker",
     "@shelf/jest-mongodb": "^2.2.1",

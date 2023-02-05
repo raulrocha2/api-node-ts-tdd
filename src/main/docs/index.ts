@@ -1,6 +1,6 @@
-import { loginPath } from './paths/login-path'
-import { accountSchema } from './schemas/account'
-import { loginParamsSchema } from './schemas/login-params'
+import { loginPath } from './paths'
+import { accountSchema, errorSchema, loginParamsSchema } from './schemas'
+import { badRequest, serverError, unauthorized } from './components'
 
 export default {
   openapi: '3.0.0',
@@ -8,6 +8,10 @@ export default {
     title: 'Clean Node API',
     description: 'API curso Mango para criar enquete entre programadores.',
     version: '1.0.0'
+  },
+  license: {
+    name: 'GPL-3.0-or-later',
+    url: ''
   },
   servers: [{
     url: '/api'
@@ -20,6 +24,12 @@ export default {
   },
   schemas: {
     account: accountSchema,
-    loginParams: loginParamsSchema
+    loginParams: loginParamsSchema,
+    error: errorSchema
+  },
+  components: {
+    badRequest,
+    unauthorized,
+    serverError
   }
 }
