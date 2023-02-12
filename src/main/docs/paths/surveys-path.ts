@@ -23,5 +23,32 @@ export const surveysPath = {
         $ref: '#/components/serverError'
       }
     }
+  },
+  post: {
+    security: [{
+      apiKeyAuth: []
+    }],
+    tags: ['Enquete'],
+    summary: 'Api para criar uma enquetes',
+    requestBody: {
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/schemas/addSurveyParams'
+          }
+        }
+      }
+    },
+    responses: {
+      204: {
+        description: 'Successo'
+      },
+      403: {
+        $ref: '#/components/forbidden'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
   }
 }
