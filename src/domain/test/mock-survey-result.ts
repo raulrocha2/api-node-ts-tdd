@@ -8,6 +8,19 @@ export const mockaveSurveyResultParams = (): ISaveSurveyResultParams => ({
   date: new Date()
 })
 
-export const mockSurveyResultModel = (): ISurveyResultModel => Object.assign(
-  {}, mockaveSurveyResultParams(), { id: 'any_id' }
-)
+export const mockSurveyResultModel = (): ISurveyResultModel => ({
+  surveyId: 'any_survey_id',
+  question: 'any_question',
+  answers: [{
+    answer: 'any_answer',
+    count: 1,
+    percent: 50
+  },
+  {
+    image: 'any_image',
+    answer: 'other_answer',
+    count: 2,
+    percent: 100
+  }],
+  date: new Date()
+})

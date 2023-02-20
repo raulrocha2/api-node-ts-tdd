@@ -1,6 +1,12 @@
 import { ISurveyResultModel } from '../../models/i-survey-result'
 
-export type ISaveSurveyResultParams = Omit<ISurveyResultModel, 'id'>
+export interface ISaveSurveyResultParams {
+  surveyId: string
+  accountId: string
+  answer: string
+  date: Date
+
+}
 
 export interface ISaveSurveyResult {
   save: (data: ISaveSurveyResultParams) => Promise<ISurveyResultModel>
