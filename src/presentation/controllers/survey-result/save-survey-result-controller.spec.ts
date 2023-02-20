@@ -2,7 +2,7 @@ import { SaveSurveyResultController } from './save-survey-result-controller.'
 import { forbidden, IHttpRequest, ILoadSurveyById, ServerError, InvalidParamError, ISaveSurveyResult, ISurveyResultModel, ISaveSurveyResultParams, ok } from './save-survey-result-protocols'
 import MockDate from 'mockdate'
 import { ISurveyModel } from '../survey/load-surveys/load-surveys-protocols'
-import { mockSurveyModel } from '@/domain/test'
+import { mockSurveyModel, mockSurveyResultModel } from '@/domain/test'
 
 const mockRequest = (): IHttpRequest => ({
   body: {
@@ -30,18 +30,17 @@ interface ISutTypes {
   loadSurveyByIdStub: ILoadSurveyById
 }
 
-const makeFakeSurveyResultModel = (): ISurveyResultModel => ({
-  id: 'any_id',
-  surveyId: 'any_survey_id',
-  accountId: 'any_account_id',
-  answer: 'answer_01',
-  date: new Date()
-})
+// const makeFakeSurveyResultModel = (): ISurveyResultModel => ({
+//   surveyId: 'any_survey_id',
+//   accountId: 'any_account_id',
+//   answer: 'answer_01',
+//   date: new Date()
+// })
 
 const makeSaveSurveyResultStub = (): ISaveSurveyResult => {
   class SaveSurveyResultStub implements ISaveSurveyResult {
     async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
-      return await new Promise(resolve => resolve(makeFakeSurveyResultModel()))
+      return await new Promise(resolve => resolve(mockSurveyResultModel()))
     }
   }
 
@@ -132,6 +131,6 @@ describe('SaveSurveyResult controller', () => {
   test('Should return 200 on success', async () => {
     const { sut } = makeSut()
     const httpReponse = await sut.handle(mockRequest())
-    expect(httpReponse).toEqual(ok(makeFakeSurveyResultModel()))
+    expect(httpReponse).toEqual(ok(mockSurveyResultModel()))
   })
 })
