@@ -8,7 +8,7 @@ export class DbLoadSurveyResult implements ILaodSurveyResult {
   ) { }
 
   async load (surveyId: string): Promise<ISurveyResultModel> {
-    await this.loadSurveyResultRepository.loadById(surveyId)
+    await this.loadSurveyResultRepository.loadBySurveyId(surveyId)
     return await Promise.resolve(null)
   }
 }
