@@ -18,7 +18,7 @@ const makeSut = (): ISutTypes => {
   }
 }
 
-describe('DbAddSurvey Usecase', () => {
+describe('DbSaveSurveyResult Usecase', () => {
   beforeAll(() => {
     MockDate.set(new Date())
   })
