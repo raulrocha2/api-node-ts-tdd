@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { ILaodSurveyResultRepository } from '@/data/protocols/db/survey/i-load-survey-result-repository'
 import { mockLoadSurveyResultRepository } from '@/data/test/mock-db-survey'
 import { DbLoadSurveyResult } from './db-load-survey-result'
-import { mockSurveyResultModel } from '@/domain/test'
+import { mockSurveyResultModel, throwError } from '@/domain/test'
 
 interface ISutTypes {
   sut: DbLoadSurveyResult
@@ -38,5 +38,12 @@ describe('DbLoadSurveyResult Usecase', () => {
     const { sut } = makeSut()
     const loadResult = await sut.load('any_survey_id')
     expect(loadResult).toEqual(mockSurveyResultModel())
+  })
+
+  test('Should throw if LoadSurveyResultRepository throws', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockImplementationOnce(throwError)
+    const promise = sut.load('any_survey_id')
+    await expect(promise).rejects.toThrow()
   })
 })
