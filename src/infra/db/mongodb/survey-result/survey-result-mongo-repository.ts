@@ -1,11 +1,12 @@
 import { ISurveyResultModel } from '@/domain/models/i-survey-result'
-import { ISaveSurveyResult, ISaveSurveyResultParams } from '@/domain/usecases/survey-result/i-save-survey-result'
+import { ISaveSurveyResultParams } from '@/domain/usecases/survey-result/i-save-survey-result'
 import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { QueryBuilder } from '../helpers/query-builder'
 import round from 'mongo-round'
+import { ISaveSurveyResultRepository } from '@/data/protocols/db/survey'
 
-export class SurveyResultMongoRepository implements ISaveSurveyResult {
+export class SurveyResultMongoRepository implements ISaveSurveyResultRepository {
   async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('survey-results')
     await surveyResultCollection.findOneAndUpdate({

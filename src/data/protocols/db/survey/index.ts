@@ -1,0 +1,5 @@
+export * from './i-add-survey-repository'
+export * from './i-load-survey-repository'
+export * from './i-load-survey-by-id-repository'
+export * from './i-load-survey-result-repository'
+export * from './i-save-survey-result-repository'
