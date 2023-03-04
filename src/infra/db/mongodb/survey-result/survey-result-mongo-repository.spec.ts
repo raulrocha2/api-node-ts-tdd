@@ -18,6 +18,9 @@ const makeSurvey = async (): Promise<ISurveyModel> => {
       },
       {
         answer: 'other_answer'
+      },
+      {
+        answer: 'third_answer'
       }
     ],
     date: new Date()
@@ -102,6 +105,39 @@ describe('Survey Result Mongo Repository', () => {
       expect(surveyResult.answers[0].percent).toBe(100)
       expect(surveyResult.answers[1].count).toBe(0)
       expect(surveyResult.answers[1].percent).toBe(0)
+    })
+  })
+
+  describe('loadBySurveyId()', () => {
+    test('Should load survey result on success', async () => {
+      const survey = (await makeSurvey())
+      const accountId = (await makeAccount()).id
+
+      await surveyResultsCollection.insertMany([
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[0].answer,
+          date: new Date()
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: new Date()
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: new Date()
+        }])
+      const sut = new SurveyResultMongoRepository()
+
+      const surveyResult = await sut.loadBySurveyId(survey.id, accountId)
+
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.surveyId).toBe(survey.id)
     })
   })
 })

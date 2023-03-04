@@ -1,5 +1,5 @@
 import { ISurveyResultModel } from '@/domain/models/i-survey-result'
 
 export interface ILaodSurveyResultRepository {
-  loadBySurveyId: (surveyId: string) => Promise<ISurveyResultModel>
+  loadBySurveyId: (surveyId: string, accountId?: string) => Promise<ISurveyResultModel>
 }

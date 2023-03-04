@@ -4,9 +4,9 @@ import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { QueryBuilder } from '../helpers/query-builder'
 import round from 'mongo-round'
-import { ISaveSurveyResultRepository } from '@/data/protocols/db/survey'
+import { ILaodSurveyResultRepository, ISaveSurveyResultRepository } from '@/data/protocols/db/survey'
 
-export class SurveyResultMongoRepository implements ISaveSurveyResultRepository {
+export class SurveyResultMongoRepository implements ISaveSurveyResultRepository, ILaodSurveyResultRepository {
   async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('survey-results')
     await surveyResultCollection.findOneAndUpdate({
@@ -24,7 +24,7 @@ export class SurveyResultMongoRepository implements ISaveSurveyResultRepository 
     return surveyResult
   }
 
-  private async loadBySurveyId (surveyId: string, accountId: string): Promise<ISurveyResultModel> {
+  async loadBySurveyId (surveyId: string, accountId: string): Promise<ISurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('survey-results')
     const query = new QueryBuilder()
       .match({
@@ -200,6 +200,7 @@ export class SurveyResultMongoRepository implements ISaveSurveyResultRepository 
       .build()
 
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
+
     return surveyResult?.length
       ? {
           surveyId: surveyResult[0].surveyId.toString(),
