@@ -7,7 +7,7 @@ import round from 'mongo-round'
 import { ILaodSurveyResultRepository, ISaveSurveyResultRepository } from '@/data/protocols/db/survey'
 
 export class SurveyResultMongoRepository implements ISaveSurveyResultRepository, ILaodSurveyResultRepository {
-  async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
+  async save (data: ISaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('survey-results')
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
@@ -20,8 +20,6 @@ export class SurveyResultMongoRepository implements ISaveSurveyResultRepository,
     }, {
       upsert: true
     })
-    const surveyResult = await this.loadBySurveyId(data.surveyId, data.accountId)
-    return surveyResult
   }
 
   async loadBySurveyId (surveyId: string, accountId: string): Promise<ISurveyResultModel> {

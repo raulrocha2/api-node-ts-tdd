@@ -36,8 +36,8 @@ export const mockLoadSurveyRepositorySub = (): ILoadSurveysRepository => {
 
 export const mockSaveSurveyResultRepository = (): ISaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements ISaveSurveyResultRepository {
-    async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
-      return await new Promise(resolve => resolve(mockSurveyResultModel()))
+    async save (data: ISaveSurveyResultParams): Promise<void> {
+      return await Promise.resolve()
     }
   }
   return new SaveSurveyResultRepositoryStub()

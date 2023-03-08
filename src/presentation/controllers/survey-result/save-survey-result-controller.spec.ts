@@ -30,13 +30,6 @@ interface ISutTypes {
   loadSurveyByIdStub: ILoadSurveyById
 }
 
-// const makeFakeSurveyResultModel = (): ISurveyResultModel => ({
-//   surveyId: 'any_survey_id',
-//   accountId: 'any_account_id',
-//   answer: 'answer_01',
-//   date: new Date()
-// })
-
 const makeSaveSurveyResultStub = (): ISaveSurveyResult => {
   class SaveSurveyResultStub implements ISaveSurveyResult {
     async save (data: ISaveSurveyResultParams): Promise<ISurveyResultModel> {
