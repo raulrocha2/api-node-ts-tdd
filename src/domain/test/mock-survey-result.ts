@@ -10,17 +10,17 @@ export const mockaveSurveyResultParams = (): ISaveSurveyResultParams => ({
 
 export const mockSurveyResultModel = (): ISurveyResultModel => ({
   surveyId: 'any_survey_id',
-  question: 'any_question',
+  question: 'question_01',
   answers: [{
-    answer: 'any_answer',
-    count: 1,
-    percent: 50
+    answer: 'answer_01',
+    count: 0,
+    percent: 0
   },
   {
-    image: 'any_image',
+    image: 'image_01',
     answer: 'other_answer',
-    count: 2,
-    percent: 100
+    count: 0,
+    percent: 0
   }],
   date: new Date()
 })

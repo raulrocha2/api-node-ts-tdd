@@ -32,11 +32,13 @@ export const mockSurveysModel = (): ISurveyModel[] => ([
 ])
 
 export const mockSurveyModel = (): ISurveyModel => ({
-  id: 'uuid_01',
+  id: 'any_survey_id',
   question: 'question_01',
   answers: [{
-    image: 'image_01',
     answer: 'answer_01'
+  }, {
+    image: 'image_01',
+    answer: 'other_answer'
   }],
   date: new Date()
 })
