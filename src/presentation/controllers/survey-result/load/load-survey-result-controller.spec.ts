@@ -1,6 +1,6 @@
 import MockDate from 'mockdate'
 import { LoadSurveyResultController } from './load-survey-result-controller.'
-import { forbidden, IHttpRequest, ILoadSurveyById, InvalidParamError } from './load-survey-result-protocols'
+import { forbidden, IHttpRequest, ILoadSurveyById, InvalidParamError, ServerError } from './load-survey-result-protocols'
 import { mockSurveyById } from '@/presentation/test/mock-load-survey-by-id'
 
 const mockRequest = (): IHttpRequest => ({
@@ -49,5 +49,15 @@ describe('LoadSurveyResult controller', () => {
     )
     const httpReponse = await sut.handle(mockRequest())
     expect(httpReponse).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('Should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(async () => {
+      return await new Promise((_resolve, reject) => reject(new Error()))
+    }
+    )
+    const httpReponse = await sut.handle(mockRequest())
+    expect(httpReponse.body).toEqual(new ServerError(httpReponse.body))
   })
 })
