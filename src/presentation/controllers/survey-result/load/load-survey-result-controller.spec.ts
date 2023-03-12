@@ -1,8 +1,9 @@
 import MockDate from 'mockdate'
 import { LoadSurveyResultController } from './load-survey-result-controller.'
-import { ILaodSurveyResult, forbidden, IHttpRequest, ILoadSurveyById, InvalidParamError, ServerError } from './load-survey-result-protocols'
+import { ILaodSurveyResult, forbidden, IHttpRequest, ILoadSurveyById, InvalidParamError, ServerError, ok } from './load-survey-result-protocols'
 import { mockSurveyById } from '@/presentation/test/mock-load-survey-by-id'
 import { makeLoadSurveyResultStub } from '@/presentation/test/mock-load-survey-result'
+import { mockSurveyResultModel } from '@/domain/test'
 
 const mockRequest = (): IHttpRequest => ({
   params: {
@@ -80,5 +81,11 @@ describe('LoadSurveyResult controller', () => {
     )
     const httpReponse = await sut.handle(mockRequest())
     expect(httpReponse.body).toEqual(new ServerError(httpReponse.body))
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpReponse = await sut.handle(mockRequest())
+    expect(httpReponse).toEqual(ok(mockSurveyResultModel()))
   })
 })
