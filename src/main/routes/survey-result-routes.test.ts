@@ -92,5 +92,30 @@ describe('Survey Routes', () => {
         .get('/api/survey/invalid_survey_id/results')
         .expect(403)
     })
+
+    test('Should return 200 on load survey result with valid accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'any_question_1',
+        answers: [
+          {
+            image: 'any_image',
+            answer: 'any_answer_1'
+          },
+          { answer: 'any_answer_2' }
+        ],
+        date: new Date()
+      })
+
+      const survey = await surveyCollection.findOne(res.insertedId)
+      const id = survey?._id.toString()
+
+      const response = await request(app)
+        .get(`/api/survey/${id}/results`)
+        .set('x-access-token', accessToken)
+
+      expect(response.status).toEqual(200)
+      expect(response.body.surveyId).toEqual(id)
+    })
   })
 })
