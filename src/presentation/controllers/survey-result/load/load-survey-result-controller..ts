@@ -5,12 +5,14 @@ import {
   IHttpResponse,
   forbidden,
   InvalidParamError,
-  serverError
+  serverError,
+  ILaodSurveyResult
 } from './load-survey-result-protocols'
 
 export class LoadSurveyResultController implements IController {
   constructor (
-    private readonly loadSurveyById: ILoadSurveyById
+    private readonly loadSurveyById: ILoadSurveyById,
+    private readonly laodSurveyResult: ILaodSurveyResult
   ) { }
 
   async handle (httpRequest: IHttpRequest): Promise<IHttpResponse> {
@@ -20,6 +22,7 @@ export class LoadSurveyResultController implements IController {
       if (!survey) {
         return forbidden(new InvalidParamError('surveyId'))
       }
+      await this.laodSurveyResult.load(surveyId)
       return null
     } catch (error) {
       return serverError(error)
