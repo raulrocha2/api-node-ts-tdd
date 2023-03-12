@@ -2,7 +2,9 @@ import {
   ILoadSurveyById,
   IController,
   IHttpRequest,
-  IHttpResponse
+  IHttpResponse,
+  forbidden,
+  InvalidParamError
 } from './load-survey-result-protocols'
 
 export class LoadSurveyResultController implements IController {
@@ -12,7 +14,10 @@ export class LoadSurveyResultController implements IController {
 
   async handle (httpRequest: IHttpRequest): Promise<IHttpResponse> {
     const { surveyId } = httpRequest.params
-    await this.loadSurveyById.loadById(surveyId)
+    const survey = await this.loadSurveyById.loadById(surveyId)
+    if (!survey) {
+      return forbidden(new InvalidParamError('surveyId'))
+    }
     return null
   }
 }
