@@ -199,7 +199,7 @@ export class SurveyResultMongoRepository implements ISaveSurveyResultRepository,
 
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
 
-    return surveyResult?.length
+    return surveyResult.length
       ? {
           surveyId: surveyResult[0].surveyId.toString(),
           question: surveyResult[0].question,

@@ -1,7 +1,7 @@
 import { mockSurveyModel, mockSurveyResultModel, mockSurveysModel } from '@/domain/test'
 import { ILoadSurveyByIdRepository } from '../protocols/db/survey/i-load-survey-by-id-repository'
 import { ILaodSurveyResultRepository } from '../protocols/db/survey/i-load-survey-result-repository'
-import { ISaveSurveyResultParams, ISaveSurveyResultRepository, ISurveyResultModel } from '../usecases/survey-result/save-survey-result/db-save-survey-result-protocol'
+import { ISaveSurveyResultParams, ISaveSurveyResultRepository, ISurveyResultModel } from '../usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
 import { IAddSurveyParams, IAddSurveyRepository } from '../usecases/survey/add-survey/db-add-survey-protocols'
 import { ILoadSurveysRepository, ISurveyModel } from '../usecases/survey/load-surveys/db-load-surveys-protocols'
 

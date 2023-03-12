@@ -3,7 +3,7 @@ import { ILaodSurveyResultRepository } from '@/data/protocols/db/survey/i-load-s
 import { mockLoadSurveyByIdRepositorySub, mockLoadSurveyResultRepository } from '@/data/test/mock-db-survey'
 import { DbLoadSurveyResult } from './db-load-survey-result'
 import { mockSurveyResultModel, throwError } from '@/domain/test'
-import { ILoadSurveyByIdRepository } from '../save-survey-result/db-save-survey-result-protocol'
+import { ILoadSurveyByIdRepository } from '../save-survey-result/db-save-survey-result-protocols'
 
 interface ISutTypes {
   sut: DbLoadSurveyResult

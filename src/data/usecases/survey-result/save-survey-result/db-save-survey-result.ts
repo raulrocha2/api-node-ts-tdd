@@ -1,6 +1,6 @@
 import { ISurveyResultModel } from '@/domain/models/i-survey-result'
 import { ISaveSurveyResultParams } from '@/domain/usecases/survey-result/i-save-survey-result'
-import { ISaveSurveyResult, ISaveSurveyResultRepository, ILaodSurveyResultRepository } from './db-save-survey-result-protocol'
+import { ISaveSurveyResult, ISaveSurveyResultRepository, ILaodSurveyResultRepository } from './db-save-survey-result-protocols'
 
 export class DbSaveSurveyResult implements ISaveSurveyResult {
   constructor (

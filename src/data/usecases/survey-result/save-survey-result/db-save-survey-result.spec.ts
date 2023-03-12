@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { mockLoadSurveyResultRepository, mockSaveSurveyResultRepository } from '@/data/test/mock-db-survey'
 import { mockaveSurveyResultParams, mockSurveyResultModel, throwError } from '@/domain/test'
 import { DbSaveSurveyResult } from './db-save-survey-result'
-import { ISaveSurveyResultRepository, ILaodSurveyResultRepository } from './db-save-survey-result-protocol'
+import { ISaveSurveyResultRepository, ILaodSurveyResultRepository } from './db-save-survey-result-protocols'
 
 interface ISutTypes {
   sut: DbSaveSurveyResult

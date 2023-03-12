@@ -1,7 +1,7 @@
 import { ILaodSurveyResultRepository } from '@/data/protocols/db/survey/i-load-survey-result-repository'
 import { ISurveyResultModel } from '@/domain/models/i-survey-result'
 import { ILaodSurveyResult } from '@/domain/usecases/survey-result/i-load-survey-result'
-import { ILoadSurveyByIdRepository } from '../save-survey-result/db-save-survey-result-protocol'
+import { ILoadSurveyByIdRepository } from '../save-survey-result/db-save-survey-result-protocols'
 
 export class DbLoadSurveyResult implements ILaodSurveyResult {
   constructor (
